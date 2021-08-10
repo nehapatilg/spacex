@@ -18,7 +18,7 @@ context("Verify endpoints", () => {
     });
   });
 
-  it("Verify GET one capsul", (list) => {
+  it("Verify GET one capsul", () => {
     cy.fixture('c112_details').then(function (c112_details) {
     cy.request("https://api.spacexdata.com/v3/capsules/C112").then(
       (response) => {
@@ -28,11 +28,10 @@ context("Verify endpoints", () => {
         //console.log(response.body);
         expect(response.body).has.property("capsule_id", "dragon1");
         expect(response.body).has.property("capsule_serial", "C112");
-        
-        c112_details.missions.forEach((mission,index)=>{
-          expect(response.body.missions[index]).has.property("name",c112_details.missions[index].name);
 
-        })
+        response.body.missions.forEach((missions,index)=>{
+          expect(response.body.missions[index]).has.property("name",c112_details.missions[index].name);
+        })   
       });
     });
   });
